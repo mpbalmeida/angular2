@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
     template: `
         <h1>Angular App</h1>
 
-        <button class="btn btn-success">Olá</button>
+        <contatos-lista></contatos-lista>
     `
 })
 export class AppComponent{
