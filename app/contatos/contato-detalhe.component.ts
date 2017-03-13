@@ -13,12 +13,30 @@ import { ContatoService } from './contato.service';
 export class ContatoDetalheComponent implements OnInit {
 
     contato: Contato;
+    private isNew: boolean = true;
 
     constructor(
         private contatoService: ContatoService,
         private route: ActivatedRoute,
         private location: Location
     ){}
+
+    ngOnInit(): void {
+
+        this.contato = new Contato(0, '', '', '');
+
+        this.route.params.forEach((params: Params) => {
+            let id: number = +params['id'];
+
+            if (id) {
+                this.isNew = false;
+                this.contatoService.getContato(id)
+                    .then((contato: Contato) => {
+                        this.contato = contato;
+                    });
+            }
+        });
+    }
 
     getFormGroupClass(isValid: boolean, isPristine:boolean): {} {
         return {
@@ -36,19 +54,11 @@ export class ContatoDetalheComponent implements OnInit {
         }
     }
 
-    ngOnInit(): void {
-
-        this.contato = new Contato(0, '', '', '');
-
-        this.route.params.forEach((params: Params) => {
-            let id: number = +params['id'];
-
-            if (id) {
-                this.contatoService.getContato(id)
-                    .then((contato: Contato) => {
-                        this.contato = contato;
-                    });
-            }
-        });
+    onSubmit():void {
+        if (this.isNew) {
+            console.log('cadastra');
+        } else {
+            console.log('altera');
+        }
     }
 }

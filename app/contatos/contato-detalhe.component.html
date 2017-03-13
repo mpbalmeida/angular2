@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Salva contato</h2>
-    <form #contatoForm="ngForm" novalidate>
+    <form (ngSubmit)="onSubmit()" #contatoForm="ngForm" novalidate>
         <div [ngClass]="getFormGroupClass(nome.valid, nome.pristine)" >
             <label for="nome">Nome</label>
             <input type="text" placeholder="Insira o nome" 
