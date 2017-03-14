@@ -55,10 +55,16 @@ export class ContatoDetalheComponent implements OnInit {
     }
 
     onSubmit():void {
+        let promise;
+
         if (this.isNew) {
             console.log('cadastra');
+            promise = this.contatoService.create(this.contato);
         } else {
             console.log('altera');
+            promise = this.contatoService.update(this.contato);
         }
+
+        promise.then(contato => this.location.back())
     }
 }
