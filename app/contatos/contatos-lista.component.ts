@@ -10,9 +10,10 @@ import { DialogService } from './../dialog.service';
     templateUrl: 'contatos-lista.component.html'
 })
 export class ContatosListaComponent implements OnInit {
-        
 
     contatos: Array<Contato>;
+    mensagem: {};
+    classesCss: {};
 
     constructor(
         private contatoService: ContatoService,
@@ -34,10 +35,28 @@ export class ContatosListaComponent implements OnInit {
                         .delete(contato)
                         .then(() => {
                             this.contatos = this.contatos.filter((c: Contato) => c.id != contato.id);
+
+                            this.mostrarMensagem({'tipo': 'success', 'texto': 'Contato excluído.'});
                         }).catch(err => {
                             console.log(err);
                         });
                 }
             });
+    }
+
+    private mostrarMensagem(mensagem: {tipo: string, texto: string}): void {
+        this.mensagem = mensagem;
+        this.montarClasses(mensagem.tipo);
+        setTimeout(() => {
+            this.mensagem = undefined;
+        }, 3000);
+    }
+
+    private montarClasses(tipo: string): void {
+        this.classesCss = {
+            'alert': true
+        };
+
+        this.classesCss['alert-' + tipo] = true;
     }
 }
